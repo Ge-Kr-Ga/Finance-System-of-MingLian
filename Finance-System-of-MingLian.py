@@ -10,14 +10,17 @@ from models import Session, Record
 
 
 CSV_FILE = "MLJY_records.csv"
+PASSWORD_FILE = "password.txt"  # 密码文件路径
 
 # 获取当前密码
 def get_password():
-    password = os.getenv("MLJY_PASSWORD")  # 从环境变量中获取密码
-    print(f"Debug: Retrieved password from environment variable.")  # 调试信息
+    if not os.path.exists(PASSWORD_FILE):
+        with open(PASSWORD_FILE, 'w') as f:
+            f.write("MLJY2025")  # 写入初始密码
+    with open(PASSWORD_FILE, 'r') as f:
+        password = f.read().strip()  # 从文件中读取密码
+    print(f"Debug: 从文件中获取密码。")  # 调试信息
     return password  # 返回密码
-
-ORIGINAL_PASSWORD = get_password()  # 使用新的获取密码方法
 
 # 初始化 CSV 文件（如果文件不存在）
 if not os.path.exists(CSV_FILE):
@@ -76,8 +79,9 @@ def export_to_excel(df):
 
 # 设置新密码
 def set_password(new_password):
-    # 这里可以考虑将新密码存储到环境变量中，但需要注意环境变量在运行时不能直接更改
-    pass  # 需要实现更新环境变量的逻辑
+    with open(PASSWORD_FILE, 'w') as f:
+        f.write(new_password)  # 更新文件中的密码
+    print(f"Debug: 密码已更新到文件。")  # 调试信息
 
 # 页面1: 输入界面
 def input_page():
