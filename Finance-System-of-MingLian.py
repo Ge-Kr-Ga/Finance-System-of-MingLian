@@ -96,7 +96,7 @@ def input_page():
         st.session_state.edit_record_index = None
 
     with st.form("input_form"):
-        name = st.text_input("上报人学生姓名", key="surname_input")
+        name = st.text_input("学生姓名", key="surname_input")
         selected_operation = st.radio(
             "选择操作类型",
             options=["初次缴费", "补充缴费", "退费"],
@@ -104,7 +104,7 @@ def input_page():
             horizontal=True
         )
         item = st.text_input("课程名称")
-        amount = st.number_input("报销金额", min_value=0.0, format="%.2f")
+        amount = st.number_input("金额", min_value=0.0, format="%.2f")
         remarks = st.text_area("备注", "", key="remarks_input")
         submitted = st.form_submit_button("提交")
         
@@ -130,11 +130,11 @@ def input_page():
                     st.success("上传记录已添加！")
 
     if st.session_state.show_edit_form:
-        st.write("修改报销金额：")
+        st.write("修改金额：")
         with st.form("edit_form"):
             df = load_data()
             record_index = st.session_state.edit_record_index
-            new_amount = st.number_input("修改报销金额", value=df.loc[record_index, '金额'], min_value=0.0, format="%.2f")
+            new_amount = st.number_input("修改金额", value=df.loc[record_index, '金额'], min_value=0.0, format="%.2f")
             new_remarks = st.text_area("新增备注", key="edit_remarks_input")
             submit_button = st.form_submit_button("保存修改")
             if submit_button:
@@ -154,7 +154,7 @@ def input_page():
 
 # 页面2: 明细页面（需要密码）
 def details_page():
-    st.title("账本中心")
+    st.title("账本管理中心")
     
     password = st.text_input("请输入密码", type="password")
     if st.button("验证密码"):
