@@ -10,19 +10,12 @@ from models import Session, Record
 
 
 CSV_FILE = "MLJY_records.csv"
-PASSWORD_FILE = "MLJY_password.txt"
 
-ORIGINAL_PASSWORD = "ZZMLJY2025"
-
+ORIGINAL_PASSWORD = os.getenv("MLJY_PASSWORD")  # 从环境变量中获取密码
 
 # 初始化 CSV 文件（如果文件不存在）
 if not os.path.exists(CSV_FILE):
     pd.DataFrame(columns=['学生姓名', '操作类型', '课程名称', '金额', '备注']).to_csv(CSV_FILE, index=False)
-
-# 初始化密码文件（如果文件不存在）
-if not os.path.exists(PASSWORD_FILE):
-    with open(PASSWORD_FILE, "w") as f:
-        f.write("ORIGINAL_PASSWORD")  # 默认密码
 
 # 创建数据库引擎
 engine = create_engine('sqlite:///MLJY_records.db')
@@ -77,13 +70,12 @@ def export_to_excel(df):
 
 # 获取当前密码
 def get_password():
-    with open(PASSWORD_FILE, "r") as f:
-        return f.read().strip()
+    return os.getenv("MLJY_PASSWORD")  # 从环境变量中获取密码
 
 # 设置新密码
 def set_password(new_password):
-    with open(PASSWORD_FILE, "w") as f:
-        f.write(new_password)
+    # 这里可以考虑将新密码存储到环境变量中，但需要注意环境变量在运行时不能直接更改
+    pass  # 需要实现更新环境变量的逻辑
 
 # 页面1: 输入界面
 def input_page():
