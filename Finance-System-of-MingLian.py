@@ -70,7 +70,9 @@ def export_to_excel(df):
 
 # 获取当前密码
 def get_password():
-    return os.getenv("MLJY_PASSWORD")  # 从环境变量中获取密码
+    password = os.getenv("MLJY_PASSWORD")  # 从环境变量中获取密码
+    print(f"Debug: Retrieved password from environment: {password}")  # 调试信息
+    return password  # 返回密码
 
 # 设置新密码
 def set_password(new_password):
@@ -155,6 +157,7 @@ def details_page():
             st.success("密码正确！")
         else:
             st.error("密码错误，无法访问！")
+            print(f"Debug: Input password: {password}")  # 调试信息
     
     if st.session_state.get("authenticated", False):
         df = load_data()
