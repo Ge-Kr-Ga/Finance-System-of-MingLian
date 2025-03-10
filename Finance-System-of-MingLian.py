@@ -12,7 +12,7 @@ from models import Session, Record
 CSV_FILE = "MLJY_records.csv"
 PASSWORD_FILE = "MLJY_password.txt"
 
-ORIGINAL_PASSWORD = os.environ['ORIGINAL_PASSWORD']
+ORIGINAL_PASSWORD = "ZZMLJY2025"
 
 
 # 初始化 CSV 文件（如果文件不存在）
