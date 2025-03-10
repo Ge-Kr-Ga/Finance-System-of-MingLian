@@ -49,7 +49,7 @@ Session = sessionmaker(bind=engine)
 def load_data():
     session = Session()
     records = session.query(Record).all()
-    return pd.DataFrame([(r.name, r.operation, r.item, r.amount, r.remarks, r.category) for r in records],
+    return pd.DataFrame([(r.name, r.operation, r.item, r.amount, r.remarks) for r in records],
                         columns=['学生姓名', '操作类型', '课程名称', '金额', '备注']) 
 
 # 将数据保存到数据库
