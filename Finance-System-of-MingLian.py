@@ -11,7 +11,13 @@ from models import Session, Record
 
 CSV_FILE = "MLJY_records.csv"
 
-ORIGINAL_PASSWORD = st.secrets["MLJY_PASSWORD"]  # 从 Streamlit Cloud 的 secrets 中获取密码
+# 获取当前密码
+def get_password():
+    password = os.getenv("MLJY_PASSWORD")  # 从环境变量中获取密码
+    print(f"Debug: Retrieved password from environment variable.")  # 调试信息
+    return password  # 返回密码
+
+ORIGINAL_PASSWORD = get_password()  # 使用新的获取密码方法
 
 # 初始化 CSV 文件（如果文件不存在）
 if not os.path.exists(CSV_FILE):
@@ -67,12 +73,6 @@ def export_to_excel(df):
         df.to_excel(writer, index=False, sheet_name="上传记录")
     output.seek(0)
     return output
-
-# 获取当前密码
-def get_password():
-    password = st.secrets["MLJY_PASSWORD"]  # 从 Streamlit Cloud 的 secrets 中获取密码
-    print(f"Debug: Retrieved password from secrets: {password}")  # 调试信息
-    return password  # 返回密码
 
 # 设置新密码
 def set_password(new_password):
